@@ -1,5 +1,7 @@
-﻿using APIMovies.Services;
+﻿using APIMovies.Models;
+using APIMovies.Services;
 using APIMovies.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +27,7 @@ namespace APIMovies.Controllers
 		
 
 		[HttpPost("addmovie")]
+		[Authorize(Roles = UserRoles.Admin)]
 		public IActionResult AddMovie(MovieVM movie)
 		{
 			
@@ -119,6 +122,8 @@ namespace APIMovies.Controllers
 		}
 
 		[HttpPost("update-movie")]
+		[Authorize(Roles = UserRoles.Admin)]
+
 		public IActionResult UpdateMovie(MovieUpdateVM movieVM)
 		{
 			try
@@ -133,6 +138,8 @@ namespace APIMovies.Controllers
 		}
 
 		[HttpDelete("deletemovie/{id}")]
+		[Authorize(Roles = UserRoles.Admin)]
+
 		public IActionResult Delete(int id)
 		{
 
@@ -152,6 +159,8 @@ namespace APIMovies.Controllers
 
 
 		[HttpPost("SaveFile")]
+		[Authorize(Roles = UserRoles.Admin)]
+
 		public IActionResult SaveFile()
 		{
 			try
