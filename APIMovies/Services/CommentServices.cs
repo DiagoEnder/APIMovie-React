@@ -41,5 +41,21 @@ namespace APIMovies.Services
 
 			return _LstCmt;
 		} 
+
+		public List<CommentWithUser> GetAll()
+		{
+			var _LstCmt = _context.Comments.Select(cmt => new CommentWithUser()
+			{
+				Id = cmt.Id,
+				Name = cmt.UserInfo.Name,
+				img = cmt.UserInfo.Img,
+				dateCreated = cmt.Created.ToString("dd/MM/yyyy"),
+				Rate = cmt.Rate,
+				Cmt = cmt.Cmt
+
+			}).ToList();
+
+			return _LstCmt;
+		}
 	}
 }

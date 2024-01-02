@@ -44,6 +44,20 @@ namespace APIMovies.Controllers
 			}
 		}
 
+		[HttpGet("allcomment")]
+		public IActionResult GetAll()
+		{
+			try
+			{
+				var lst = _commentServices.GetAll();
+				return Ok(lst);
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
+		}
+
 
 	}
 }

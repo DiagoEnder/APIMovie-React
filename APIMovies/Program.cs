@@ -84,6 +84,8 @@ namespace APIMovies
 			builder.Services.AddTransient<UsersServices>();
 			builder.Services.AddTransient<CommentServices>();
 			builder.Services.AddTransient<TokenServices>();
+			builder.Services.AddTransient<UserServices>();
+
 
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
