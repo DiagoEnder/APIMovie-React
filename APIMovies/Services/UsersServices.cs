@@ -18,8 +18,7 @@ namespace APIMovies.Services
 				Name = userVM.Name,
 				Img = userVM.Img
 			};
-			_context.userInfos.Add(_user);
-			_context.SaveChanges();
+			
 		}
 
 

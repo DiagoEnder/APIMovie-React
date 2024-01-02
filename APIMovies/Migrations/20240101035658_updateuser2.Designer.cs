@@ -4,6 +4,7 @@ using APIMovies.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIMovies.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240101035658_updateuser2")]
+    partial class updateuser2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,16 +45,22 @@ namespace APIMovies.Migrations
 
                     b.Property<string>("IdUser")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MoviesId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Rate")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserInfoId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("IdMovie");
+                    b.HasIndex("MoviesId");
 
-                    b.HasIndex("IdUser");
+                    b.HasIndex("UserInfoId");
 
                     b.ToTable("Comments");
                 });
@@ -142,9 +151,11 @@ namespace APIMovies.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Img")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -354,15 +365,13 @@ namespace APIMovies.Migrations
                 {
                     b.HasOne("APIMovies.Models.Movies", "Movies")
                         .WithMany("Comments")
-                        .HasForeignKey("IdMovie")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("MoviesId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("APIMovies.Models.UserInfo", "UserInfo")
-                        .WithMany("comments")
-                        .HasForeignKey("IdUser")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("UserInfoId");
 
                     b.Navigation("Movies");
 
@@ -458,11 +467,6 @@ namespace APIMovies.Migrations
                     b.Navigation("Movies");
 
                     b.Navigation("Movies_Type");
-                });
-
-            modelBuilder.Entity("APIMovies.Models.UserInfo", b =>
-                {
-                    b.Navigation("comments");
                 });
 #pragma warning restore 612, 618
         }

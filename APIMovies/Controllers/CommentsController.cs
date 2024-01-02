@@ -30,6 +30,20 @@ namespace APIMovies.Controllers
 			}
 		}
 
+		[HttpGet("get-cmt/{id}")]
+		public IActionResult GetCmtByIdMV(int id)
+		{
+			var lst = _commentServices.GetListCmtWithMovie(id);
+			if (lst.Count > 0)
+			{
+				
+				return Ok(lst);
+			}else
+			{
+				return Ok(null);
+			}
+		}
+
 
 	}
 }

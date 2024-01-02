@@ -14,13 +14,18 @@ namespace APIMovies.Controllers
 		private readonly SignInManager<IdentityUser> _signInManager;
 		private readonly TokenServices _tokenServices;
 		private readonly RoleManager<IdentityRole> _roleManager;
+		private readonly ApplicationDbContext _context;
 
-		public AuthenJwtController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, TokenServices tokenServices, RoleManager<IdentityRole> roleManager)
+		public AuthenJwtController(UserManager<IdentityUser> userManager,
+			SignInManager<IdentityUser> signInManager,
+			TokenServices tokenServices, RoleManager<IdentityRole> roleManager
+			, ApplicationDbContext context)
 		{
 			_userManager = userManager;
 			_signInManager = signInManager;
 			_tokenServices = tokenServices;
 			_roleManager = roleManager;
+			_context = context;
 		}
 
 		[HttpPost]
@@ -60,6 +65,8 @@ namespace APIMovies.Controllers
 			{
 				await _userManager.AddToRoleAsync(identityUser, UserRoles.User);
 			}
+
+			
 
 
 			return Ok(new Models.Response { Status = "Success", Message = "User dc tao thanh cong!" });
@@ -108,6 +115,18 @@ namespace APIMovies.Controllers
 				await _userManager.AddToRoleAsync(identityUser, UserRoles.User);
 			}
 
+			var user = await _userManager.FindByNameAsync(userDetails.UserName);
+			if (user != null)
+			{
+				var info = new UserInfo();
+				info.Id = user.Id;
+				info.Img = "anymous.png";
+				info.Name = userDetails.UserName;
+
+				_context.UserInfo.Add(info);
+				_context.SaveChanges();
+
+			}
 
 			return Ok(new Models.Response { Status = "Success", Message = "User dc tao thanh cong!" });
 
@@ -117,13 +136,18 @@ namespace APIMovies.Controllers
 		public async Task<IActionResult> Login([FromBody] LoginCredentials credentials)
 		{
 			var user = await _userManager.FindByNameAsync(credentials.UserName);
-
+			
 			if (user != null && await _userManager.CheckPasswordAsync(user, credentials.Password))
 			{
 				var roles = await _userManager.GetRolesAsync(user);
 				var token = _tokenServices.GenerateToken(user, roles);
-
-				return Ok(new { Token = token });
+				var id = user.Id;
+				var TokenId = new
+				{
+					Id = id,
+					Token = token,
+				};
+				return Ok(new { Token = TokenId });
 
 			}
 

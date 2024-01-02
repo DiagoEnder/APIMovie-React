@@ -138,7 +138,7 @@ namespace APIMovies.Services
 			var _mv = _context.Movies.Where(m => m.Id == id).Select(mv => new MovieDetailVM()
 			{
 				
-
+				Id = mv.Id,
 				NameMovie = mv.NameMovie,
 				Description = mv.Description,
 				State = mv.State,
@@ -152,7 +152,7 @@ namespace APIMovies.Services
 			return _mv;
 		}
 
-		public  IQueryable<MovieWithTypeVM> GetMovieByName(string name)
+		public  List<MovieWithTypeVM> GetMovieByName(string name)
 		{
 			var _mov = _context.Movies.Where(m => m.NameMovie.Contains(name)).Select( m => new MovieWithTypeVM()
 			{
@@ -165,7 +165,7 @@ namespace APIMovies.Services
 				LinkAddress = m.LinkAddress,
 				Rating = m.Comments.Average(n => n.Rate),
 				ListTypes = m.Movie_Type.Select(n => n.TypeMovie.Name).ToList()
-			});
+			}).ToList();
 			
 
 			

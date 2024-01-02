@@ -27,7 +27,7 @@ namespace APIMovies.Controllers
 		
 
 		[HttpPost("addmovie")]
-		[Authorize(Roles = UserRoles.Admin)]
+		//[Authorize(Roles = UserRoles.Admin)]
 		public IActionResult AddMovie(MovieVM movie)
 		{
 			
@@ -122,7 +122,7 @@ namespace APIMovies.Controllers
 		}
 
 		[HttpPost("update-movie")]
-		[Authorize(Roles = UserRoles.Admin)]
+		
 
 		public IActionResult UpdateMovie(MovieUpdateVM movieVM)
 		{
@@ -159,7 +159,7 @@ namespace APIMovies.Controllers
 
 
 		[HttpPost("SaveFile")]
-		[Authorize(Roles = UserRoles.Admin)]
+		//[Authorize(Roles = UserRoles.Admin)]
 
 		public IActionResult SaveFile()
 		{

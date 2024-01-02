@@ -30,6 +30,7 @@ namespace APIMovies.Services
 		{
 			var _LstCmt = _context.Comments.Where(n =>  n.IdMovie == idmv).Select(cmt => new CommentWithUser()
 			{
+				Id = cmt.Id,
 				Name = cmt.UserInfo.Name,
 				img = cmt.UserInfo.Img,
 				dateCreated = cmt.Created.ToString("dd/MM/yyyy"),
