@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace APIMovies.Models
 {
@@ -42,6 +43,13 @@ namespace APIMovies.Models
 				.WithMany(c => c.Comments)
 				.HasForeignKey(x => x.IdMovie)
 				.OnDelete(DeleteBehavior.Restrict);
+
+
+			builder.Entity<Movies>()
+			.HasMany(m => m.Comments)
+			.WithOne(c => c.Movies)
+			.HasForeignKey(c => c.IdMovie)
+			.OnDelete(DeleteBehavior.Cascade);
 
 			base.OnModelCreating(builder);
 		}

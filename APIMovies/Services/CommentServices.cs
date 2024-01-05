@@ -38,6 +38,8 @@ namespace APIMovies.Services
 				Cmt = cmt.Cmt
 
 			}).ToList();
+			
+
 
 			return _LstCmt;
 		} 

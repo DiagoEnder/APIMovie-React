@@ -40,7 +40,7 @@ namespace APIMovies.Controllers
 				return Ok(lst);
 			}else
 			{
-				return Ok(null);
+				return NotFound();
 			}
 		}
 

@@ -100,7 +100,7 @@ namespace APIMovies.Controllers
 
 			if( _mv.Count == 0)
 			{
-				return NotFound();
+				return Ok(null);
 			}
 			
 			return Ok(_mv);
@@ -138,7 +138,7 @@ namespace APIMovies.Controllers
 		}
 
 		[HttpDelete("deletemovie/{id}")]
-		[Authorize(Roles = UserRoles.Admin)]
+		
 
 		public IActionResult Delete(int id)
 		{
@@ -179,7 +179,7 @@ namespace APIMovies.Controllers
 			}
 			catch (Exception ex)
 			{
-				return new JsonResult("anony.png");
+				return new JsonResult("anymous.png");
 			}
 		}
 

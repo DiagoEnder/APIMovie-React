@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using System.Text;
 
 namespace APIMovies
@@ -91,6 +92,17 @@ namespace APIMovies
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
 
+			//Log.Logger = new LoggerConfiguration()
+			//	.MinimumLevel.Information()
+			//	.WriteTo.Console()
+			//	.WriteTo.File("logs/mylogtest-.txt", rollingInterval: RollingInterval.Day)
+			//	.CreateLogger();
+
+			Log.Logger = new LoggerConfiguration()
+				.MinimumLevel.Information()
+				.ReadFrom.Configuration(builder.Configuration).CreateLogger();
+
+			builder.Host.UseSerilog();
 			var app = builder.Build();
 
 			app.UseStaticFiles(new StaticFileOptions
@@ -106,6 +118,7 @@ namespace APIMovies
 				app.UseSwagger();
 				app.UseSwaggerUI();
 			}
+			app.UseSerilogRequestLogging();
 			
 			app.UseHttpsRedirection();
 

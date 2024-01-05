@@ -37,5 +37,23 @@ namespace APIMovies.Services
 
 
 		}
+
+
+		public List<UserVM> AllUser()
+		{
+			var all = _context.UserInfo.Select(x =>  new UserVM
+			{
+				Id = x.Id,
+				Name = x.Name,
+				Img = x.Img,
+
+			}).ToList();
+			
+			if(all.Count < 0)
+			{
+				return null;
+			}
+			return all;
+		}
 	}
 }
